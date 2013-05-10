@@ -49,8 +49,9 @@
 #import <CoreLocation/CoreLocation.h>
 
 #import "SKPSMTPMessage.h"
+#import "AddZoneViewController.h"
 
-@interface RegionsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate, UINavigationBarDelegate, SKPSMTPMessageDelegate> {
+@interface RegionsViewController : UIViewController<UITableViewDelegate, UITableViewDataSource, MKMapViewDelegate, CLLocationManagerDelegate, UINavigationBarDelegate, SKPSMTPMessageDelegate, AddZoneCallback> {
 
 }
 

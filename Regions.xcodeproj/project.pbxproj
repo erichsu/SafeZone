@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63A74BFF173CDFE600C618AA /* AddZoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A74BFD173CDFE600C618AA /* AddZoneViewController.m */; };
+		63A74C00173CDFE600C618AA /* AddZoneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63A74BFE173CDFE600C618AA /* AddZoneViewController.xib */; };
 		CBA9F15312F76264005BB61E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA9F15212F76264005BB61E /* UIKit.framework */; };
 		CBA9F15512F76264005BB61E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA9F15412F76264005BB61E /* Foundation.framework */; };
 		CBA9F15712F76264005BB61E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA9F15612F76264005BB61E /* CoreGraphics.framework */; };
@@ -41,6 +43,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		63A74BFC173CDFE600C618AA /* AddZoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddZoneViewController.h; sourceTree = "<group>"; };
+		63A74BFD173CDFE600C618AA /* AddZoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddZoneViewController.m; sourceTree = "<group>"; };
+		63A74BFE173CDFE600C618AA /* AddZoneViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddZoneViewController.xib; sourceTree = "<group>"; };
 		CBA9F14E12F76264005BB61E /* Regions.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Regions.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CBA9F15212F76264005BB61E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CBA9F15412F76264005BB61E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -144,6 +149,9 @@
 				CBA9F16712F76264005BB61E /* RegionsViewController.h */,
 				CBA9F16812F76264005BB61E /* RegionsViewController.m */,
 				CBA9F16A12F76264005BB61E /* RegionsViewController.xib */,
+				63A74BFC173CDFE600C618AA /* AddZoneViewController.h */,
+				63A74BFD173CDFE600C618AA /* AddZoneViewController.m */,
+				63A74BFE173CDFE600C618AA /* AddZoneViewController.xib */,
 				CBA9F17912F763D8005BB61E /* RegionAnnotation.h */,
 				CBA9F17A12F763D8005BB61E /* RegionAnnotation.m */,
 				CBA9F17B12F763D8005BB61E /* RegionAnnotationView.h */,
@@ -257,6 +265,7 @@
 				CBBF867312FB498900508BCE /* ReadMe.txt in Resources */,
 				DC40D5A8173A2C9E005544AF /* Icon.png in Resources */,
 				DC40D5AA173A2CA9005544AF /* Icon@2x.png in Resources */,
+				63A74C00173CDFE600C618AA /* AddZoneViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,6 +286,7 @@
 				DC40D5B8173CC7AB005544AF /* NSData+Base64Additions.m in Sources */,
 				DC40D5B9173CC7AB005544AF /* NSStream+SKPSMTPExtensions.m in Sources */,
 				DC40D5BA173CC7AB005544AF /* SKPSMTPMessage.m in Sources */,
+				63A74BFF173CDFE600C618AA /* AddZoneViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

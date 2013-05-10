@@ -48,11 +48,17 @@
 #import "RegionsViewController.h"
 #import "RegionAnnotationView.h"
 #import "RegionAnnotation.h"
+#import "AddZoneViewController.h"
 
 #import "SKPSMTPMessage.h"
 #import "NSData+Base64Additions.h"
 
-@implementation RegionsViewController
+@implementation RegionsViewController{
+    AddZoneViewController *controller;
+    
+    int nodeCount;
+    NSMutableArray *nodeInfos;
+}
 
 @synthesize regionsMapView, updatesTableView, updateEvents, locationManager, navigationBar;
 
@@ -78,6 +84,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+    nodeCount=0;
+    nodeInfos = [NSMutableArray array];
+    
+    controller = [[AddZoneViewController alloc] init];
+    controller.callback = self;
+    
 	// Create empty array to add region events to.
 	updateEvents = [[NSMutableArray alloc] initWithCapacity:0];
 	
@@ -97,12 +109,13 @@
 	NSArray *regions = [[locationManager monitoredRegions] allObjects];
 	
 	// Iterate through the regions and add annotations to the map for each of them.
+    /*
 	for (int i = 0; i < [regions count]; i++) {
 		CLRegion *region = [regions objectAtIndex:i];
 		RegionAnnotation *annotation = [[RegionAnnotation alloc] initWithCLRegion:region];
 		[regionsMapView addAnnotation:annotation];
 		[annotation release];
-	}
+	}*/
 }
 
 
@@ -130,6 +143,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSLog(@"events: %i", [updateEvents count]);
     return [updateEvents count];
 }
 
@@ -161,7 +175,8 @@
 	if([annotation isKindOfClass:[RegionAnnotation class]]) {
 		RegionAnnotation *currentAnnotation = (RegionAnnotation *)annotation;
 		NSString *annotationIdentifier = [currentAnnotation title];
-		RegionAnnotationView *regionView = (RegionAnnotationView *)[regionsMapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];	
+        NSLog(@"annotationIdentifier: %@", annotationIdentifier);
+		RegionAnnotationView *regionView = (RegionAnnotationView *)[regionsMapView dequeueReusableAnnotationViewWithIdentifier:annotationIdentifier];
 		
 		if (!regionView) {
 			regionView = [[[RegionAnnotationView alloc] initWithAnnotation:annotation] autorelease];
@@ -313,30 +328,9 @@
  A new annotation is created to represent the region and then the application starts monitoring the new region.
  */
 - (IBAction)addRegion {
-	if ([CLLocationManager regionMonitoringAvailable]) {
-		// Create a new region based on the center of the map view.
-		CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(regionsMapView.centerCoordinate.latitude, regionsMapView.centerCoordinate.longitude);
-		CLRegion *newRegion = [[CLRegion alloc] initCircularRegionWithCenter:coord 
-																	  radius:200.0
-																  identifier:[NSString stringWithFormat:@"%f, %f", regionsMapView.centerCoordinate.latitude, regionsMapView.centerCoordinate.longitude]];
-		
-		// Create an annotation to show where the region is located on the map.
-		RegionAnnotation *myRegionAnnotation = [[RegionAnnotation alloc] initWithCLRegion:newRegion];
-		myRegionAnnotation.coordinate = newRegion.center;
-		myRegionAnnotation.radius = newRegion.radius;
-		
-		[regionsMapView addAnnotation:myRegionAnnotation];
-		
-		[myRegionAnnotation release];
-		
-		// Start monitoring the newly created region.
-		[locationManager startMonitoringForRegion:newRegion desiredAccuracy:kCLLocationAccuracyBest];
-		
-		[newRegion release];
-	}
-	else {
-		NSLog(@"Region monitoring is not available.");
-	}
+    
+    [self presentModalViewController:controller animated:YES];
+    
 }
 
 - (void)sendMail:(NSString *)msg {
@@ -397,6 +391,65 @@
 	if (!updatesTableView.hidden) {
 		[updatesTableView reloadData];
 	}
+}
+
+#pragma mark - add zone callback after completion
+-(void)addZoneCompletion{
+    nodeCount++;
+    
+    if(nodeCount>2){
+        
+        //reset counter and clear map
+        [nodeInfos removeAllObjects];
+        nodeCount = 0;
+    }
+    
+     if ([CLLocationManager regionMonitoringAvailable]) {
+     // Create a new region based on the center of the map view.
+     CLLocationCoordinate2D coord = CLLocationCoordinate2DMake(regionsMapView.centerCoordinate.latitude, regionsMapView.centerCoordinate.longitude);
+     CLRegion *newRegion = [[CLRegion alloc] initCircularRegionWithCenter:coord
+     radius:200.0
+     identifier:[NSString stringWithFormat:@"%f, %f", regionsMapView.centerCoordinate.latitude, regionsMapView.centerCoordinate.longitude]];
+     
+         
+         
+     // Create an annotation to show where the region is located on the map.
+     RegionAnnotation *myRegionAnnotation = [[RegionAnnotation alloc] initWithCLRegion:newRegion];
+     myRegionAnnotation.coordinate = newRegion.center;
+     myRegionAnnotation.radius = newRegion.radius;
+     
+     [regionsMapView addAnnotation:myRegionAnnotation];
+     
+     [myRegionAnnotation release];
+     
+     // Start monitoring the newly created region.
+     [locationManager startMonitoringForRegion:newRegion desiredAccuracy:kCLLocationAccuracyBest];
+     
+     [newRegion release];
+         
+         
+         if(nodeCount==2){
+             //index 1
+             [nodeInfos addObject:[[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude]];
+             
+             
+             //draw line
+             
+             
+             
+         }else if(nodeCount==1){
+             //index 0
+             [nodeInfos addObject:[[CLLocation alloc] initWithLatitude:coord.latitude longitude:coord.longitude]];
+         }
+         
+     }
+     else {
+     NSLog(@"Region monitoring is not available.");
+     }
+    
+
+    
+    
 }
 
 
